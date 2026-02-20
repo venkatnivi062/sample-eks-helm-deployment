@@ -1,0 +1,9 @@
+replicaCount: 3
+
+env:
+  ENVIRONMENT: prod
+
+resources:
+  limits:
+    cpu: 1
+    memory: 1Gi
