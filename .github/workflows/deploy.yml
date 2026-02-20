@@ -39,3 +39,7 @@ jobs:
         run: |
           helm upgrade --install sample-app ./sample-app \
             --values sample-app/values-dev.yaml
+
+      - name: Restart Deployment
+        run: |
+          kubectl rollout restart deployment sample-app-sample-app
