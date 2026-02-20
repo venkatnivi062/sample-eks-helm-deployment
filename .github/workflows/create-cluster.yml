@@ -25,9 +25,9 @@ jobs:
       - name: Create Cluster
         run: |
           eksctl create cluster \
-            --name sample-cluster \
+            --name sample-helm-cluster \
             --region ${{ secrets.AWS_REGION }} \
-            --nodegroup-name sample-nodes \
+            --nodegroup-name sample-helm-nodes \
             --node-type t3.medium \
             --nodes 2 \
             --managed
