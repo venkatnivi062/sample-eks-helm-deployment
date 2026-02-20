@@ -1,0 +1,33 @@
+name: Create EKS Cluster
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-cluster:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure AWS
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Install eksctl
+        run: |
+          curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz" | tar xz -C /tmp
+          sudo mv /tmp/eksctl /usr/local/bin
+
+      - name: Create Cluster
+        run: |
+          eksctl create cluster \
+            --name sample-cluster \
+            --region ${{ secrets.AWS_REGION }} \
+            --nodegroup-name sample-nodes \
+            --node-type t3.medium \
+            --nodes 2 \
+            --managed
